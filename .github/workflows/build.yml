@@ -1,0 +1,17 @@
+name: Build xxHash
+
+on:
+  push:
+    branches: [ "master" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: gcc -Wall -O3 -march=native -std=c99 -D_POSIX_C_SOURCE=200809L -o xxhash src/main.c src/xxhash.c
+      - uses: actions/upload-artifact@v4
+        with:
+          name: xxhash
+          path: xxhash
